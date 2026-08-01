@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Happy Girlfriend's Day ❤️</title>
+
+  <!-- Cute fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;700&family=Quicksand:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg-1: #ffe9f1;
+      --bg-2: #f7eefe;
+      --primary: #f3a6d2; /* soft pink */
+      --lavender: #d8c1ff;
+      --white: #ffffff;
+      --glass: rgba(255,255,255,0.5);
+      --muted: #6b6b78;
+      --accent: #ff7ab6;
+      --card-radius: 18px;
+      --duration: 800ms;
+      --ease: cubic-bezier(.2,.9,.3,1);
+    }
+
+    /* Mobile-first layout */
+    html,body{
+      height:100%;
+      margin:0;
+      font-family: "Quicksand", "Comfortaa", system-ui, -apple-system, Arial;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      background: linear-gradient(135deg, var(--bg-1), var(--bg-2));
+      overflow:hidden;
+      color:#333;
+    }
+
+    /* full-screen scene container */
+    .stage{
+      position:relative;
+      height:100vh;
+      width:100vw;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:20px;
+      box-sizing:border-box;
+    }
+
+    /* common scene card */
+    .scene{
+      position:absolute;
+      inset:0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      transition: opacity var(--duration) var(--ease), transform var(--duration) var(--ease);
+      opacity:0;
+      transform: scale(.98) translateY(10px);
+      pointer-events:none;
+    }
+    .scene.active{
+      opacity:1;
+      transform: scale(1) translateY(0);
+      pointer-events:auto;
+    }
+
+    /* glass panel */
+    .panel{
+      width:100%;
+      max-width:860px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.45));
+      border-radius: calc(var(--card-radius) + 6px);
+      padding:24px;
+      box-shadow: 0 10px 30px rgba(111,72,120,0.12);
+      border: 1px solid rgba(255,255,255,0.6);
+      backdrop-filter: blur(10px) saturate(120%);
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:16px;
+    }
+
+    h1.title{
+      margin:6px 0 0;
+      font-size:1.6rem;
+      letter-spacing:0.6px;
+      color:#6b2f58;
+      text-align:center;
+    }
+    p.lead{ margin:0; color:var(--muted); text-align:center; }
+
+    /* floating particles overlay */
+    .particles{
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      overflow:visible;
+    }
+    .particle{
+      position:absolute;
+      will-change: transform, opacity;
+      animation: float var(--floatDur, 8s) linear infinite;
+      opacity:.95;
+      transform-origin:center;
+    }
+    @keyframes float{
+      0%{ transform: translateY(0) translateX(0) rotate(0); }
+      50%{ transform: translateY(-18vh) translateX(4vw) rotate(180deg); }
+      100%{ transform: translateY(0) translateX(-2vw) rotate(360deg); }
+    }
+
+    /* Loading screen */
+    .loading-bg{
+      position:absolute;
+      inset:0;
+      background: linear-gradient(120deg, rgba(255,167,199,0.25), rgba(216,193,255,0.25));
+      z-index:-1;
+      transition: filter 1s ease;
+      animation: subtleShift 6s ease-in-out infinite;
+      border-radius:0;
+      backdrop-filter: blur(3px);
+    }
+    @keyframes subtleShift{
+      0%{ transform: rotate(0deg) scale(1); }
+      50%{ transform: rotate(1deg) scale(1.02); }
+      100%{ transform: rotate(0deg) scale(1); }
+    }
+
+    .loader{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      justify-content:center;
+      flex-direction:column;
+    }
+    .dots{
+      display:flex;
+      gap:8px;
+    }
+    .dot{
+      width:12px; height:12px;
+      background:linear-gradient(180deg,var(--accent),#ff4da3);
+      border-radius:50%;
+      box-shadow:0 6px 18px rgba(255,122,182,0.2);
+      transform-origin:center;
+      animation: bounce 1s ease-in-out infinite;
+    }
+    .dot:nth-child(2){ animation-delay:150ms; }
+    .dot:nth-child(3){ animation-delay:300ms; }
+    @keyframes bounce{
+      0%,100%{ transform: translateY(0) scale(1); opacity:1; }
+      50%{ transform: translateY(-10px) scale(1.15); opacity:0.9; }
+    }
+
+    /* envelope */
+    .envelope-wrap{ display:flex; flex-direction:column; align-items:center; gap:18px; }
+    .envelope{
+      width:220px; height:140px; position:relative; cursor:pointer;
+      transform-origin:center center;
+      transition: transform 600ms var(--ease);
+    }
+    .envelope .body{
+      width:100%; height:100%;
+      background: linear-gradient(180deg, #fff, #fff8ff);
+      border-radius:10px;
+      border:1px solid rgba(200,150,180,0.4);
+      box-shadow: 0 8px 30px rgba(111,72,120,0.08);
+      position:relative;
+      overflow:hidden;
+    }
+    .flap{
+      position:absolute;
+      top:-2px;
+      left:0;
+      width:100%;
+      height:54%;
+      background: linear-gradient(180deg,#ffdff0,#ffd0e8);
+      transform-origin: top center;
+      border-bottom-left-radius:100px;
+      border-bottom-right-radius:100px;
+      border:1px solid rgba(200,150,180,0.25);
+      transition: transform 700ms var(--ease);
+      z-index:3;
+      display:flex;
+      align-items:flex-end;
+      justify-content:center;
+      padding-bottom:16px;
+    }
+    .envelope.open .flap{ transform: rotateX(180deg) translateY(-8px); box-shadow: none; }
+    .letter{
+      width:86%;
+      height:86%;
+      background: linear-gradient(180deg,#fff,#fffaf6);
+      position:absolute;
+      left:7%;
+      top:50%;
+      transform: translateY(0);
+      border-radius:8px;
+      box-shadow: 0 10px 30px rgba(144,62,111,0.08);
+      transition: transform 700ms var(--ease);
+      padding:20px;
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+      z-index:2;
+    }
+    .envelope.open .letter{ transform: translateY(-140%); } /* slides out */
+
+    .open-hint{
+      font-size:0.95rem;
+      background: linear-gradient(90deg, rgba(255,255,255,0.8), rgba(255,255,255,0.6));
+      padding:8px 14px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,0.6);
+      box-shadow: 0 6px 20px rgba(111,72,120,0.06);
+    }
+
+    /* typewriter */
+    .typewriter{
+      width:100%;
+      min-height:120px;
+      font-size:1rem;
+      color:#5a2b4c;
+      line-height:1.5;
+      white-space:pre-wrap;
+      letter-spacing:0.2px;
+      padding:6px 2px;
+      font-weight:500;
+    }
+    .next-btn{
+      margin-top:8px;
+      background: linear-gradient(90deg*
